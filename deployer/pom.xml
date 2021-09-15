@@ -64,6 +64,19 @@
             <classifier>jar-with-dependencies</classifier>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>connector.direct</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>*</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
+            <classifier>jar-with-dependencies</classifier>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -164,6 +177,22 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>buildnumber-maven-plugin</artifactId>
+                        <version>1.4</version>
+                        <configuration>
+                            <timestampFormat>yyyyMMddHHmm</timestampFormat>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>create-timestamp</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <inherited>false</inherited>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <configuration>
                             <!-- 发布模式使用的maven assembly插件描述文件 -->
@@ -171,7 +200,7 @@
                                 <descriptor>${basedir}/src/main/assembly/release.xml</descriptor>
                             </descriptors>
                             <!-- 如果一个应用的包含多个deploy模块，如果使用同样的包名， 如果把它们复制的一个目录中可能会失败，所以包名加了 artifactId以示区分 -->
-                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <finalName>${project.artifactId}-${project.version}-${timestamp}</finalName>
                             <!-- scm 要求 release 模式打出的包放到顶级目录下的target子目录中 -->
                             <outputDirectory>${project.parent.build.directory}</outputDirectory>
                         </configuration>

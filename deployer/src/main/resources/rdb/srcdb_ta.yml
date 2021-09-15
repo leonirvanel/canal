@@ -1,0 +1,30 @@
+dataSourceKey: defaultDS
+destination: example
+#groupId: g1
+#outerAdapterKey: default
+concurrent: true
+dbMapping:
+  database: srcdb
+  table: ta
+  targetDb: dstdb
+  targetTable: tb
+  targetPk:
+    id: i
+#  mapAll: true
+  targetColumns:
+    i:
+    a:
+    b:
+  etlCondition: "where c_time>={}"
+  commitBatch: 3000 # 批量提交的大小
+
+
+## Mirror schema synchronize config
+#dataSourceKey: defaultDS
+#destination: example
+#groupId: g1
+#outerAdapterKey: mysql1
+#concurrent: true
+#dbMapping:
+#  mirrorDb: true
+#  database: mytest
